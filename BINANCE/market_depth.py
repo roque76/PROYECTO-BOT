@@ -1,7 +1,6 @@
 import json
 from binance.websocket.spot.websocket_api import SpotWebsocketAPIClient
 import time
-from decimal import Decimal
 
 class WebSocket():
      def __init__(self):
@@ -40,24 +39,19 @@ class WebSocket():
           lowerLimit = self.avg_price-percentage
           upperLimit = self.avg_price+percentage
           
-          bid_depth = 0
-          ask_depth = 0
-          
-          print(f'Value now bids: {bid_depth}')
-          print(f'Value now asks: {ask_depth}')
-
-
+          self.bid_depth = 0
+          self.ask_depth = 0
           for price in self.bids:
                if lowerLimit <= price and upperLimit >= price:
-                    bid_depth+=self.bids[price]
+                    self.bid_depth+=self.bids[price]
 
           for price in self.asks:
                if lowerLimit <= price and upperLimit >= price:
-                    ask_depth+= self.asks[price]
+                    self.ask_depth+= self.asks[price]
 
           print(f'Average price {self.avg_price}')
-          print(f'Bid depth {bid_depth}')     
-          print(f'Ask depth {ask_depth}')     
+          print(f'Bid depth {self.bid_depth}')     
+          print(f'Ask depth {self.ask_depth}')     
                
 
      def start_client(self):
@@ -73,5 +67,3 @@ class WebSocket():
                     print("Exciting")
                     break
 
-ws_client = WebSocket()
-ws_client.start_client()
