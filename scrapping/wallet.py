@@ -36,11 +36,13 @@ class WalletScrapping():
                     date = date.text.strip().split()[0]
                     btc = re.sub(r"[+,]", '', bid.text.strip().split()[0])
                     self.bids[float(usd),date] = float(btc)
+                    
         
                 elif ask:
                     usd = re.sub(r'[$(),]', '', ask.text.strip().split()[2])
                     date = date.text.strip().split()[0]
                     btc= re.sub(r'[-,]', '', ask.text.strip().split()[0])
                     self.asks[float(usd),date] = float(btc)
-        
-        
+                    
+
+    
