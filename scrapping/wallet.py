@@ -8,10 +8,9 @@ import time
 class WalletScrapping():
     def __init__(self, url):
         self.url = url
-    
+        self.output = True
+
     def scrappe(self):
-        self.bids = {}
-        self.asks = {}
         headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36'}
 
         try:
@@ -32,17 +31,13 @@ class WalletScrapping():
                 bid = row.find('span', class_='text-success')
                 ask = row.find('span', class_='text-error')
                 if bid:
-                    usd = re.sub(r"[($),]", '', bid.text.strip().split()[2])
-                    date = date.text.strip().split()[0]
                     btc = re.sub(r"[+,]", '', bid.text.strip().split()[0])
-                    self.bids[float(usd),date] = float(btc)
-                    
+                    return float(btc), self.output
         
                 elif ask:
-                    usd = re.sub(r'[$(),]', '', ask.text.strip().split()[2])
-                    date = date.text.strip().split()[0]
                     btc= re.sub(r'[-,]', '', ask.text.strip().split()[0])
-                    self.asks[float(usd),date] = float(btc)
-                    
+                    self.output = False
+                    return float(btc), self.output
+
 
     
